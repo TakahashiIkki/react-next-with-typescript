@@ -2,41 +2,32 @@ import React from "react";
 import Header from "./components/header";
 import Footer from "./components/footer";
 
-import {
-    createStyles,
-    Theme,
-    withStyles,
-    WithStyles
-} from "@material-ui/core/styles";
-
-function styles(theme: Theme) {
-    return createStyles({
-        root: {
-            paddingTop: theme.spacing(8)
-        }
-    });
+interface State {
+    title: string;
 }
 
-interface Props {
-    children?: React.ReactNode;
-}
+class Index extends React.Component<State> {
+    public state = {
+        title: "Sample"
+    };
 
-class Index extends React.Component<Props & WithStyles<typeof styles>> {
+    constructor(state: State) {
+        super(state);
+        this.state = {title: "Welcome"};
+    }
 
-    constructor(props: Props & WithStyles<typeof styles>) {
-        super(props);
+    changeTitle(title: string) {
+        this.setState({title});
     }
 
     public render() {
-        const title="Sample";
         return (
             <div>
-                <Header title={title} />
-                <Header title={"Thank you"} />
-                <Footer />
+                <Header changeTitle={this.changeTitle.bind(this)} title={this.state.title}/>
+                <Footer/>
             </div>
         );
     }
 }
 
-export default withStyles(styles)(Index);
+export default (Index);
